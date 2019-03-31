@@ -43,15 +43,27 @@ const staticCache = (req, cacheName = currentCache) => caches.match(req)
     : fetch(req).then(networkRes => { // Cache and return the network response
       caches.open(cacheName).then(cache => cache.put(req, networkRes));
       return networkRes.clone();
-    }));
+}));
+
+
+// Clean old Giphys from the 'giphy' cache
+const cleanGiphyCache = giphys => {
+  caches.open('giphy').then(cache => {
+    cache.keys().then(keys => {
+      keys.forEach(key => {
+        if (!giphys.includes(key.url)) cache.delete(key);
+      });
+    })
+  })
+}
+
 
 // Network with cache fallback
-const fallbackCache = req => fetch(req)
-  .then(networkRes => {
-    if (!networkRes.ok) throw 'Fetch error';
-    caches.open(currentCache).then(cache => cache.put(req, networkRes));
-    return networkRes.clone();
-  }).catch(() => caches.match(req));
+const fallbackCache = req => fetch(req).then(networkRes => {
+  if (!networkRes.ok) throw 'Fetch error';
+  caches.open(currentCache).then(cache => cache.put(req, networkRes));
+  return networkRes.clone();
+}).catch(() => caches.match(req));
 
 
 // Listen to fetch events and replace with cached response if available
@@ -62,4 +74,10 @@ self.addEventListener('fetch', e => {
     e.respondWith(fallbackCache(e.request));
   else if (e.request.url.match('giphy.com/media')) // Giphy Media
     e.respondWith(staticCache(e.request, 'giphy'));
+});
+
+
+// Listen for message from client
+self.addEventListener('message', e => {
+  if (e.data.action === 'cleanGiphyCache') cleanGiphyCache(e.data.giphys);
 });
