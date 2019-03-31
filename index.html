@@ -9,6 +9,9 @@
 
   <link rel="manifest" href="manifest.json">
 
+  <meta name="theme-color" content="#0082f9" />
+  <meta name="Description" content="Giphygram: latest Giphy trending gifs.">
+
   <meta name="apple-mobile-web-app-title" content="Giphygram">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="apple-touch-startup-image" href="images/launch.png">
@@ -46,6 +49,11 @@
       animation-timing-function: linear;
     }
 
+    #update button.icon {
+      background-color: transparent;
+      border: none;
+    }
+
     @keyframes spin {
       from {
         transform: rotate(0deg);
@@ -64,13 +72,14 @@
   <!-- Nav Header -->
   <header class="navbar sticky-top navbar-expand bg-primary navbar-dark">
     <!-- Logo -->
-    <img src="images/logo.png" alt="Giphygram" width="60" class="img-fluid navbar-brand">
+    <img src="images/logo.png" alt="Giphygram logo" width="60" class="img-fluid navbar-brand">
 
     <div id="update" class="ml-auto">
-      <a class="icon" href="#update"><img width="25" src="images/flame.png"></a>
+      <button class="icon">
+        <img width="25" src="images/flame.png" alt="a button with a flame icon to refresh the gif list">
+      </button>
       <img class="icon d-none spinner" width="20" src="images/sync.png">
     </div>
-
   </header>
 
   <!-- Main Conatainer -->
@@ -83,6 +92,13 @@
 
     <!-- Giphys -->
     <div id="giphys" class="row no-gutters"></div>
+
+    <noscript>
+      <div class="text-center mt-5">
+        Giphygram requires JavaScript to function.<br>
+        <small>Please enable JavaScript in your browser settings.</small>
+      </div>
+    </noscript>
 
   </main>
 </body>

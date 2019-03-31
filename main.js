@@ -49,7 +49,7 @@ function update() {
         // Add Giphy HTML
         $('#giphys').prepend(
           '<div class="col-sm-6 col-md-4 col-lg-3 p-1">' +
-            '<img class="w-100 img-fluid" src="' + giphy.images.downsized_large.url + '">' +
+            '<img class="w-100 img-fluid" alt="A gif image from Giphy" src="' + giphy.images.downsized_large.url + '">' +
           '</div>');
       });
 
@@ -78,7 +78,7 @@ function update() {
 }
 
 // Manual refresh
-$('#update a').click(update);
+$('#update button').click(update);
 
 // Update trending giphys on load
 update();
