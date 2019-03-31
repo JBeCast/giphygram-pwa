@@ -19,7 +19,7 @@ var giphy = {
   url: 'https://api.giphy.com/v1/gifs/trending',
   query: {
     api_key: '54452c59b31e4d14aca213ec76014baa',
-    limit: 10
+    limit: 12
   }
 };
 
